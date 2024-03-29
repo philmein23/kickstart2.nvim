@@ -795,7 +795,11 @@ require('lazy').setup({
 
       -- ... and there is more!
       --  Check out: https://github.com/echasnovski/mini.nvim
+      require('mini.files').setup()
     end,
+    keys = {
+      { '<leader>ff', '<cmd>lua MiniFiles.open()<cr>', desc = 'Toggle file navigator' },
+    },
   },
   { -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
@@ -831,6 +835,16 @@ require('lazy').setup({
     'christoomey/vim-tmux-navigator',
   },
   {
+    'backdround/global-note.nvim',
+    config = function()
+      local global_note = require 'global-note'
+
+      vim.keymap.set('n', '<leader>n', global_note.toggle_note, {
+        desc = 'Toggle global note',
+      })
+    end,
+  },
+  {
     'cbochs/grapple.nvim',
     dependencies = {
       { 'nvim-tree/nvim-web-devicons', lazy = true },
@@ -851,6 +865,7 @@ require('lazy').setup({
       { '<leader>2', '<cmd>Grapple select index=2<cr>', desc = 'Grapple select 2' },
       { '<leader>3', '<cmd>Grapple select index=3<cr>', desc = 'Grapple select 3' },
       { '<leader>4', '<cmd>Grapple select index=4<cr>', desc = 'Grapple select 4' },
+      { '<leader>5', '<cmd>Grapple select index=5<cr>', desc = 'Grapple select 5' },
     },
   },
 
