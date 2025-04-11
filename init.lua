@@ -905,7 +905,11 @@ require('lazy').setup({
     -- Optional dependencies
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     config = function() -- this is the function that runs, after loading
-      require('oil').setup()
+      require('oil').setup {
+        view_options = {
+          show_hidden = true,
+        },
+      }
 
       vim.keymap.set('n', '-', '<CMD>Oil<CR>', { desc = 'Open parent directory' })
     end,
@@ -1052,7 +1056,15 @@ require('lazy').setup({
     event = 'VeryLazy',
     build = 'make',
     opts = {
-      -- add any opts here
+      -- provider = 'deepseek',
+      -- vendors = {
+      --   deepseek = {
+      --     __inherited_from = 'openai',
+      --     api_key_name = 'DEEPSEEK_API_KEY',
+      --     endpoint = 'https://api.deepseek.com',
+      --     model = 'deepseek-coder',
+      --   },
+      -- }, -- add any opts here
     },
     dependencies = {
       'nvim-tree/nvim-web-devicons', -- or echasnovski/mini.icons
@@ -1259,7 +1271,7 @@ require('lazy').setup({
               wrap = false,
               signcolumn = 'yes',
               statuscolumn = ' ',
-              conceallevel = 3,
+              conceallevel = 4,
             },
           }
         end,
