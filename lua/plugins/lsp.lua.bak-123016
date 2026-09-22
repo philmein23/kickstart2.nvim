@@ -154,35 +154,6 @@ return {
           end,
         },
       }
-
-      -- TypeScript 7 is its own language server (`tsc --lsp --stdio`). It is
-      -- per-project, not a Mason package: nvim-lspconfig's `tsc` config finds
-      -- node_modules/.bin/tsc at the root and starts it when it is 7 or newer.
-      vim.lsp.config('tsc', { capabilities = capabilities })
-      vim.lsp.enable 'tsc'
-
-      -- ts_ls steps aside when the project's own tsc is TypeScript 7+: that one
-      -- is a full language server (and, in dbla-pipeline, carries the Effect
-      -- plugin). Otherwise both attach and only one of them knows Effect.
-      -- `workspace_required` stops the single-file fallback from attaching it anyway.
-      vim.lsp.config('ts_ls', {
-        workspace_required = true,
-        root_dir = function(bufnr, on_dir)
-          local root = vim.fs.root(bufnr, { 'package.json', '.git' })
-          if not root then
-            return
-          end
-          local tsc = root .. '/node_modules/.bin/tsc'
-          if vim.fn.executable(tsc) == 1 then
-            local out = vim.system({ tsc, '--version' }, { text = true }):wait()
-            local v = vim.version.parse(out.stdout or '')
-            if v and v.major >= 7 then
-              return
-            end
-          end
-          on_dir(root)
-        end,
-      })
     end,
   },
   { -- Autoformat
